@@ -1,0 +1,8 @@
+classTweaker  v1  named
+accessible class net/minecraft/client/gui/screen/TitleScreen__LetterBlock
+inject-interface net/minecraft/client/Minecraft net/cfauto/cypress_optifabric/impl/IMinecraftProvider
+inject-interface net/minecraft/client/gui/screen/Screen net/cfauto/cypress_optifabric/impl/IOptipineScreenProvider
+accessible field net/minecraft/client/render/vertex/Tesselator USE_VBO Z
+inject-interface net/minecraft/client/options/GameOptions net/cfauto/cypress_optifabric/impl/IGameOptionsProvider
+inject-interface net/minecraft/world/World net/cfauto/cypress_optifabric/impl/IWorldProvider
+accessible field net/minecraft/world/World lightUpdates Ljava/util/List;
