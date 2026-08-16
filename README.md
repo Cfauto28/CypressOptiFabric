@@ -11,6 +11,6 @@ A WIP port of OptiPine to CypressFabric
 - And a few more tweaks! (Not sure)
 
 ## Problems
-- Incompatibility with CypressBlockItemAPI (Can't be fixed as the more ids part of the library will never work with this)
+- Incompatibility with MoreIDs (Can't be fixed)
 - Can't play Freerun and Zombies worlds (Can probably be fixed)
 - WorldGen is a bit wrong (Can probably be fixed)

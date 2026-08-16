@@ -21,7 +21,7 @@
 		"cypress_lib_core": "*"
 	},
   "breaks": {
-    "cypressblockitemapi": "*"
+    "moreids": "*"
   },
   "accessWidener": "cypress_optifabric.classtweaker"
 }
