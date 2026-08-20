@@ -11,4 +11,4 @@ A WIP port of OptiPine to CypressFabric
 - And a few more tweaks! (Not sure)
 
 ## Problems
-- Incompatibility with MoreIDs (Can't be fixed, OptiPine provides it own MoreIDs)
+- Incompatibility with MoreIDs (Can't be fixed)
