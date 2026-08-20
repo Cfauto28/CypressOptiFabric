@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
+import net.cfauto.cypress_optifabric.ext.WorldChunkExt;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.WorldChunk;
 
-public class EmptyChunk extends WorldChunk {
-	public EmptyChunk(World world1, byte[] b2, int i3, int i4) {
-		super(world1, b2, i3, i4);
+public class EmptyChunk extends WorldChunkExt {
+	public EmptyChunk(World world1, short[] s, int i3, int i4) {
+		super(world1, s, i3, i4);
 		this.empty = true;
 	}
 
@@ -19,7 +19,8 @@ public class EmptyChunk extends WorldChunk {
 	public void populateHeightMap() {
 	}
 
-	public void generateSkylightMap() {
+	@Override
+	public void populateHeightMapOnly() {
 	}
 
 	@Override

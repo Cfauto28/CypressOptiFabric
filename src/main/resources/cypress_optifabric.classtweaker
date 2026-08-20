@@ -6,3 +6,6 @@ accessible field net/minecraft/client/render/vertex/Tesselator USE_VBO Z
 inject-interface net/minecraft/client/options/GameOptions net/cfauto/cypress_optifabric/impl/IGameOptionsProvider
 inject-interface net/minecraft/world/World net/cfauto/cypress_optifabric/impl/IWorldProvider
 accessible field net/minecraft/world/World lightUpdates Ljava/util/List;
+transitive-accessible method net/minecraft/nbt/NbtElement write (Ljava/io/DataOutput;)V
+transitive-accessible method net/minecraft/nbt/NbtElement read (Ljava/io/DataInput;)V
+transitive-inject-interface net/minecraft/nbt/NbtCompound net/cfauto/cypress_optifabric/impl/IShortArrayProvider

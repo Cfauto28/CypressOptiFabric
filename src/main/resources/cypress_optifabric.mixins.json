@@ -14,12 +14,16 @@
     "ThreadChunkPopulatorMixin",
     "TitleScreenMixin",
     "WorldMixin",
-	"ChunkCacheMixin",
 	"DeathScreenMixin",
 	"GameMenuScreenMixin",
 	"GenLowRiverMixin",
 	"SoundEngineMixin",
-	"OverworldChunkGeneratorMixin"
+	"OverworldChunkGeneratorMixin",
+	"NbtCompoundMixin",
+	"NbtElementMixin",
+	"WorldChunkMixin",
+	"AlphaChunkStorageMixin",
+	"ChunkNibbleStorageMixin"
   ],
   "server": [
   ],

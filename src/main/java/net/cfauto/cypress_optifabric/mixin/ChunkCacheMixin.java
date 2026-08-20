@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(ChunkCache.class)
 public class ChunkCacheMixin {
 	@Redirect(method = "<init>", at = @At(value = "NEW", target = "net/minecraft/world/chunk/WorldChunk"))
-	private WorldChunk mixin(World world, byte[] blocks, int chunkX, int chunkZ) {
+	private WorldChunk mixin(World world, short[] blocks, int chunkX, int chunkZ) {
 		return new EmptyChunk(world, blocks, chunkX, chunkZ);
 	}
 }
