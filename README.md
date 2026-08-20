@@ -12,4 +12,3 @@ A WIP port of OptiPine to CypressFabric
 
 ## Problems
 - Incompatibility with MoreIDs (Can't be fixed, OptiPine provides it own MoreIDs)
-- Zombies worlds seem to crash after being loaded (Can probably be fixed)
