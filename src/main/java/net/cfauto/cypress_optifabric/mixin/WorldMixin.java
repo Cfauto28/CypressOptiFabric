@@ -4,9 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import ext.client.InputHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -32,7 +29,17 @@ public class WorldMixin implements IWorldProvider {
 	@Shadow
 	public List lightUpdates;
 	@Unique
-	public volatile List blocklightingToUpdate = new ArrayList();
+	public volatile List blocklightingToUpdate;
+
+	@Inject(method = "<init>(Ljava/lang/String;)V", at = @At(value = "FIELD", target = "Lnet/minecraft/world/World;lightUpdates:Ljava/util/List;"))	
+	public void initWorld(String name, CallbackInfo ci) {
+		this.blocklightingToUpdate = new ArrayList();
+	}
+
+	@Inject(method = "<init>(Ljava/io/File;Ljava/lang/String;J)V", at = @At(value = "FIELD", target = "Lnet/minecraft/world/World;lightUpdates:Ljava/util/List;"))	
+	public void init2World(File file1, String string2, long j3, CallbackInfo ci) {
+		this.blocklightingToUpdate = new ArrayList();
+	}
 
 	/**
 	 * @author FMG793
@@ -53,18 +60,28 @@ public class WorldMixin implements IWorldProvider {
 		}
 		return new ChunkCache((World)(Object)this, alphaStorage, new OverworldChunkGenerator((World)(Object)this, this.seed));
 	}
+	
+	public boolean getRegion() {
+		return false;
+	}
+	
+	@Overwrite
+	public boolean doLightUpdates() {
+		return false;
+	}
 
 	@Unique
 	public synchronized void doLightUpdatesExt() {
+		LightUpdate lightUpdate21;
 		while(!this.lightUpdates.isEmpty()) {
-			LightUpdate lightUpdate21 = (LightUpdate)this.lightUpdates.remove(this.lightUpdates.size() - 1);
+			lightUpdate21 = (LightUpdate)this.lightUpdates.remove(this.lightUpdates.size() - 1);
 			if(lightUpdate21 != null) {
 				lightUpdate21.run((World)(Object)this);
 			}
 		}
 
 		while(!this.blocklightingToUpdate.isEmpty()) {
-			LightUpdate lightUpdate21 = (LightUpdate)this.lightUpdates.remove(this.lightUpdates.size() - 1);
+			lightUpdate21 = (LightUpdate)this.lightUpdates.remove(this.lightUpdates.size() - 1);
 			if(lightUpdate21 != null) {
 				lightUpdate21.run((World)(Object)this);
 			}
@@ -80,32 +97,28 @@ public class WorldMixin implements IWorldProvider {
 	public boolean isChunkLoaded(int x, int y, int z) {
 		return (Boolean) null;
 	}
-
-	@WrapMethod(method = "updateLight(Lnet/minecraft/world/LightType;IIIIIIZ)V")
-	private void asyncPatch(LightType type, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, boolean expand, Operation<Void> original) {
-		if (!InputHandler.minecraft.options.getAsyncGen()) {
-			int i9 = (maxX + minX) / 2;
-			int i10 = (maxZ + minZ) / 2;
-			if(this.isChunkLoaded(i9, 64, i10)) {
-				int i11 = (type == LightType.SKY ? this.lightUpdates : this.blocklightingToUpdate).size();
-				if(expand) {
-					int i12 = 4;
-					if(i12 > i11) {
-						i12 = i11;
-					}
-
-					for(int i13 = 0; i13 < i12; ++i13) {
-						LightUpdate metadataChunkBlock14 = (LightUpdate)(type == LightType.SKY ? this.lightUpdates : this.blocklightingToUpdate).get((type == LightType.SKY ? this.lightUpdates : this.blocklightingToUpdate).size() - i13 - 1);
-						if(metadataChunkBlock14.type == type && metadataChunkBlock14.expand(minX, minY, minZ, maxX, maxY, maxZ)) {
-							return;
-						}
-					}
+	
+	@Overwrite
+	public void updateLight(LightType type, int minX, int minY, int minZ, int maxX, int maxY, int maxZ, boolean expand) {
+		int i9 = (maxX + minX) / 2;
+		int i10 = (maxZ + minZ) / 2;
+		if(this.isChunkLoaded(i9, 64, i10)) {
+			int i11 = (type == LightType.SKY ? this.lightUpdates : this.blocklightingToUpdate).size();
+			if(expand) {
+				int i12 = 4;
+				if(i12 > i11) {
+					i12 = i11;
 				}
 
-				this.lightUpdates.add(new LightUpdate(type, minX, minY, minZ, maxX, maxY, maxZ));
+				for(int i13 = 0; i13 < i12; ++i13) {
+					LightUpdate metadataChunkBlock14 = (LightUpdate)(type == LightType.SKY ? this.lightUpdates : this.blocklightingToUpdate).get((type == LightType.SKY ? this.lightUpdates : this.blocklightingToUpdate).size() - i13 - 1);
+					if(metadataChunkBlock14 != null && metadataChunkBlock14.type == type && metadataChunkBlock14.expand(minX, minY, minZ, maxX, maxY, maxZ)) {
+						return;
+					}
+				}
 			}
-		} else {
-			original.call(type, minX, minY, minZ, maxX, maxY, maxZ, expand);
+
+			this.lightUpdates.add(new LightUpdate(type, minX, minY, minZ, maxX, maxY, maxZ));
 		}
 	}
 }

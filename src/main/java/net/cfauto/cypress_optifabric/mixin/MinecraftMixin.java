@@ -29,7 +29,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Minecraft.class)
@@ -152,9 +151,6 @@ public class MinecraftMixin implements IMinecraftProvider {
 
 	}
 
-	@Shadow
-	public void method_1_546() {} //Why is this even here
-
 	@Unique
 	public void waitScreen() throws LWJGLException {
 		Window scaledResolution1 = new Window(this.width, this.height);
@@ -187,7 +183,6 @@ public class MinecraftMixin implements IMinecraftProvider {
 		tessellator4.color(0xFFFFFF);
 		this.draw((this.width / 2 - s5) / 2, (this.height / 2 - s6) / 2, 0, 0, s5, s6);
 		this.textRenderer.draw(this.status, 10, 10, 0xFFFFFF);
-		this.method_1_546();
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_FOG);
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
@@ -243,25 +238,9 @@ public class MinecraftMixin implements IMinecraftProvider {
 
 	}
 
-	@ModifyExpressionValue(
-		method = "prepareWorld(Ljava/lang/String;)V",
-		at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;doLightUpdates()Z")
-	)
-	public boolean prepareWorldExt(boolean original) {
-		return false;
-	}
-
 	@Inject(method = "prepareWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;doLightUpdates()Z"))
 	private void mixin1(String saveName, CallbackInfo ci) {
 		this.updateLighting();
-	}
-
-	@ModifyExpressionValue(
-		method = "run()V",
-		at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;doLightUpdates()Z")
-	)
-	public boolean runExt(boolean original) {
-		return false;
 	}
 
 	@Inject(method = "run", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;doLightUpdates()Z"))

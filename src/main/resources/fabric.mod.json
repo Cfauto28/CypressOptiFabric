@@ -20,8 +20,8 @@
 		"minecraft": "1.0.0-alpha.1.0.16.5.20",
 		"cypress_lib_core": "*"
 	},
-  "breaks": {
-    "moreids": "*"
-  },
+  "provides": [
+    "moreids"
+  ],
   "accessWidener": "cypress_optifabric.classtweaker"
 }

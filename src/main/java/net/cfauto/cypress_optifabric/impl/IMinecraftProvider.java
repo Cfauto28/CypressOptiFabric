@@ -21,8 +21,4 @@ public interface IMinecraftProvider {
 	default void unpack(File file1) {
 		throw new AbstractMethodError();
 	}
-
-	default void startGame(String saveName) {
-		throw new AbstractMethodError();
-	}
 }

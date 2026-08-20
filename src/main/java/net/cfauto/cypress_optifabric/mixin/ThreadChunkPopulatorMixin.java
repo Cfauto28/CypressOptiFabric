@@ -9,7 +9,7 @@ import ext.client.InputHandler;
 import ext.world.gen.ThreadChunkPopulator;
 import org.spongepowered.asm.mixin.injection.At;
 
-@Mixin(ThreadChunkPopulator.class)
+@Mixin(value = ThreadChunkPopulator.class, priority = 990)
 public class ThreadChunkPopulatorMixin {
 	@Shadow
 	public static boolean conf_asyncGen;
