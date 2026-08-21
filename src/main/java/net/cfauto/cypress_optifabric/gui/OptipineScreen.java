@@ -65,8 +65,10 @@ public class OptipineScreen extends Screen {
 
 		this.buttons.add(new ButtonSelect(-100, this.width / 4, this.height - 25, 200, 20, "Back", false));
 
-		if(SoundEngine.soundSystem != null) {
-			InputHandler.minecraft.soundEngine.playMusic("Juhry", true);
+		if(this.minecraft.world == null) {
+			if(SoundEngine.soundSystem != null) {
+				InputHandler.minecraft.soundEngine.playMusic("Juhry", true);
+			}
 		}
 	}
 
@@ -75,8 +77,10 @@ public class OptipineScreen extends Screen {
 		if(button.id == -100) {
 			this.minecraft.openScreen(this.prevScreen);
 			
-			if(SoundEngine.soundSystem != null) {
-				InputHandler.minecraft.soundEngine.playMusic("mainmenu", true);
+			if(this.minecraft.world == null) {
+				if(SoundEngine.soundSystem != null) {
+					InputHandler.minecraft.soundEngine.playMusic("mainmenu", true);
+				}
 			}
 		}
 
@@ -86,11 +90,11 @@ public class OptipineScreen extends Screen {
 		}
 
 		if(button.id == 1001) {
-			this.minecraft.packWorlds(); //Needs Mixin Impl
+			this.minecraft.packWorlds();
 		}
 
 		if(button.id == 1002) {
-			this.minecraft.unpackWorlds(); //Needs Mixin Impl
+			this.minecraft.unpackWorlds();
 		}
 
 	}
@@ -111,7 +115,7 @@ public class OptipineScreen extends Screen {
 
 			for(int i3 = 0; i3 < this.logoEffects.length; ++i3) {
 				for(i2 = 0; i2 < this.logoEffects[i3].length; ++i2) {
-					this.logoEffects[i3][i2] = new TitleScreen__LetterBlockExt(i3, i2);//Needs Mixin Impl
+					this.logoEffects[i3][i2] = new TitleScreen__LetterBlockExt(i3, i2);
 				}
 			}
 		}

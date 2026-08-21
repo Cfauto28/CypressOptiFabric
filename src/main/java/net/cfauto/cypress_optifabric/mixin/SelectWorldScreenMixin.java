@@ -60,7 +60,7 @@ public class SelectWorldScreenMixin extends Screen {
 				long j9 = nbtCompound4.getLong("SizeOnDisk");
 				string8 = string8 + " (" + (float)(j9 / 1024L * 100L / 1024L) / 100.0F + " MB)";
 				boolean z13 = false;
-				if((new File(file2, "/saves/World" + (i5 + 1) + "/region")).exists()) {
+				if((new File(file2, "/saves/World" + (i3 + 1) + "/region")).exists()) {
 					i1 = 16777120;
 					i2 = Color.cyan.getRGB();
 					z13 = true;
@@ -70,9 +70,9 @@ public class SelectWorldScreenMixin extends Screen {
 				}
 				this.buttons.add((new ButtonSelect(i3, this.width / 2 - 100, this.height / 6 + 24 * i5, 150, 20, string8, true)).method_1_1966(z7 ? 16728128 : i2, z7 ? 16552080 : i1));
 				if(z13) {
-					this.buttons.add(new ButtonSelect(i5, this.width / 2 + 50, this.height / 6 + 24 * i5, 50, 20, "Unpack", true));
+					this.buttons.add(new ButtonSelect(i3, this.width / 2 + 50, this.height / 6 + 24 * i5, 50, 20, "Unpack", true));
 				} else {
-					this.buttons.add(new ButtonSelect(i5, this.width / 2 + 50, this.height / 6 + 24 * i5, 50, 20, "Pack", true));
+					this.buttons.add(new ButtonSelect(i3, this.width / 2 + 50, this.height / 6 + 24 * i5, 50, 20, "Pack", true));
 				}
 			}
 		}
@@ -88,7 +88,7 @@ public class SelectWorldScreenMixin extends Screen {
 		if(button.active) {
 			if(button.id > -1) {
 				File file2 = new File(Minecraft.getWorkingDirectory(), "/saves/World" + (button.id + 1));
-				if(button.message.equals("Pack")) { //Can't we use ids here?
+				if(button.message.equals("Pack")) {
 					this.minecraft.pack(file2);
 					this.method_1_2031();
 				} else if(button.message.equals("Unpack")) {

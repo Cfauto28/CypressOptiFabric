@@ -253,7 +253,7 @@ public abstract class WorldMixin implements IWorldProvider {
 		}
 
 		while(!this.blocklightingToUpdate.isEmpty()) {
-			lightUpdate21 = (LightUpdate)this.lightUpdates.remove(this.lightUpdates.size() - 1);
+			lightUpdate21 = (LightUpdate)this.blocklightingToUpdate.remove(this.blocklightingToUpdate.size() - 1);
 			if(lightUpdate21 != null) {
 				lightUpdate21.run((World)(Object)this);
 			}
